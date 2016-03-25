@@ -8,26 +8,27 @@
 #
 
 library(shiny)
+library(leaflet)
+library(RColorBrewer)
 
 # Define UI for application that draws a histogram
-shinyUI(fluidPage(
-  
-  # Application title
-  titlePanel("Old Faithful Geyser Data"),
-  
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-       sliderInput("bins",
-                   "Number of bins:",
-                   min = 1,
-                   max = 50,
-                   value = 30)
+bootstrapPage(
+  tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
+  leafletOutput("map", width = "100%", height = "100%"),
+  absolutePanel(
+    top = 10, right = 10,
+    # sliderInput("range", "Magnitudes", min(quakes$mag), max(quakes$mag),
+    #             value = range(quakes$mag), step = 0.1
+    # ),
+    selectInput("empresa", "Empresa", multiple=T,
+                unique(infracc$EMPRESA)
     ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-       plotOutput("distPlot")
+    selectInput("anio", "Año",
+                unique(infracc$ANIO)
+    ),
+    checkboxInput("legend", "Show legend", TRUE),
+    htmlOutput("histInfra")
+    # plotOutput("histInfra", height = 200)
+    #plotOutput("scatterCollegeIncome", height = 250)
     )
-  )
-))
+)
