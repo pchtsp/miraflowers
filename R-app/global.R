@@ -3,6 +3,7 @@ library(dplyr)
 library(magrittr)
 library(data.table)
 library(googleVis)
+library(curl)
 
 authkey <- readLines("authkey")
 
